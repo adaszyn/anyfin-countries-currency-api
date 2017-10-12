@@ -1,16 +1,21 @@
 const axios = require('axios')
-const COUNTRIES_ENDPOINT = "https://restcountries.eu/rest/v2/name/"
-
+const SEARCH_COUNTRIES_ENDPOINT = 'https://restcountries.eu/rest/v2/name/';
+const ALL_COUNTRIES_ENDPOINT = 'https://restcountries.eu/rest/v2/all';
 const countriesQuery = async(root, args, context) => {
+  let url
   const { phrase } = args
+  if (!phrase || phrase === '') {
+    url = ALL_COUNTRIES_ENDPOINT;
+  } else {
+    url = SEARCH_COUNTRIES_ENDPOINT + phrase;
+  }
   let countries = []
   try {
-    response = await axios.get(COUNTRIES_ENDPOINT + phrase)
+    response = await axios.get(url)
     countries = response.data
   } catch (e) {
     throw "Server error."
   }
-  console.log(countries[0].currencies)
   return countries.map(mapToSchema)
 }
 

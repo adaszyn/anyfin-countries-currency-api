@@ -16,14 +16,14 @@ const typeDefs = `
     currency: Currency
   }
   type Query {
-    searchCountry(phrase: String!): [Country] 
+    countries(phrase: String): [Country]
     exchange(countryId: String!, ammount: Float!): Float
   }
 `;
 
 const resolvers = {
   Query: {
-    searchCountry: countriesQuery,
+    countries: countriesQuery,
     exchange: exchangeQuery
   },
 };
