@@ -1,13 +1,14 @@
 const express = require('express')
 const { graphqlExpress, graphiqlExpress} = require( 'graphql-server-express')
 const bodyParser = require('body-parser')
-
+const cors = require('cors')
 const { schema, rootValue, context } = require('./schema')
+
 
 const PORT = 3000;
 const server = express();
 
-
+server.use(cors())
 
 server.use('/graphql', bodyParser.json(), graphqlExpress(request => ({
   schema,
